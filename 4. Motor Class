@@ -1,2 +1,64 @@
+class RobotCar {
+  private:
+    const int AIN1 = 8;
+    const int BIN1 = 7;
+    const int PWMA = 5;
+    const int PWMB = 6;
+
+  public:
+    void setup() {
+      pinMode(PWMA, OUTPUT);
+      pinMode(PWMB, OUTPUT);
+      pinMode(AIN1, OUTPUT);  
+      pinMode(BIN1, OUTPUT);
+      digitalWrite(3, HIGH);
+    }
+
+    void forward() {
+      digitalWrite(AIN1, HIGH); 
+      digitalWrite(BIN1, HIGH); 
+      analogWrite(PWMA, 190); 
+      analogWrite(PWMB, 190);
+    }
+
+    void leftForward() {
+      digitalWrite(AIN1, HIGH); 
+      digitalWrite(BIN1, HIGH); 
+      analogWrite(PWMA, 95); 
+      analogWrite(PWMB, 190);
+    }
+
+    void stop() {
+      digitalWrite(AIN1, HIGH); 
+      digitalWrite(BIN1, HIGH); 
+      analogWrite(PWMA, 0); 
+      analogWrite(PWMB, 0);
+    }
+};
+
+RobotCar car;
+
+void setup() {
+  car.setup();
+}
+
+void loop() {
+  car.forward();
+  delay(1000);
+  car.leftForward();
+  delay(1000);
+  car.forward();
+  delay(1000);
+  car.leftForward();
+  delay(1000);
+  car.forward();
+  delay(1000);
+  car.leftForward();
+  delay(1000);
+  car.forward();
+  delay(1000);
+  car.stop();
+  delay(2000);
+}
 
 
