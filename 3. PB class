@@ -1,2 +1,35 @@
+/*
+The goal of this program is to create a push button class in Arduino, which can detect when a button is pressed or released.
+The main theme of this program is digital input and output control.
+Private : pin and state
+Public constructor with pin Is pressed
+*/
 
+// Define a class named "Push Botton"
+class Push Botton {
+// Private variables of the class
+private:
+int pin;
+bool state;
 
+// Public methods of the class
+public:
+// Constructor method that takes an integer pin number as an argument
+Push Botton(int pin){
+this->pin = pin; // Store the pin number in the class variable
+state = false; // Set the initial state of the button to "not pressed"
+pinMode(pin, INPUT_PULLUP); // Set the pin mode to "INPUT_PULLUP"
+}
+bool isPressed(){
+  bool currentState = digitalRead(pin) == LOW; // Read the current state of the button
+  state = true; // Update the state variable to indicate that the button has been pressed
+  return true;
+}
+
+// Method to check if the button has been released since the last check
+elseif(! currentState && state){
+  state = false; // Update the state variable to indicate that the button has been released
+}
+return false;
+}
+};
