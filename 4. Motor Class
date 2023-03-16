@@ -1,17 +1,26 @@
-class RobotCar {
-  private:
-    const int AIN1 = 8;
-    const int BIN1 = 7;
-    const int PWMA = 5;
-    const int PWMB = 6;
+/* This program controls a RobotCar using digital and analog inputs to control the car's movements. The main theme is controlling a digital output using analog inputs.
 
-  public:
+The class RobotCar defines the behavior of the car, including setting up the pins, moving forward, moving left forward, and stopping.
+
+In the main loop, the car moves forward for a second, then moves left forward for a second, and repeats this pattern three times before stopping for two seconds. */
+
+class RobotCar {
+ 
+ private:
+    const int AIN1 = 8; // Define analog input pin AIN1 as pin 8
+    const int BIN1 = 7; // Define analog input pin BIN1 as pin 7
+    const int PWMA = 5; // Define analog input pin PWMA as pin 5
+    const int PWMB = 6; // Define analog input pin PWMB as pin 6
+  
+  
+   public: // Set up the pins as inputs or outputs
+   
     void setup() {
-      pinMode(PWMA, OUTPUT);
-      pinMode(PWMB, OUTPUT);
-      pinMode(AIN1, OUTPUT);  
-      pinMode(BIN1, OUTPUT);
-      digitalWrite(3, HIGH);
+      pinMode(PWMA, OUTPUT); // Set PWMA pin as output
+      pinMode(PWMB, OUTPUT); // Set PWMB pin as output
+      pinMode(AIN1, OUTPUT); // Set AIN1 pin as output
+      pinMode(BIN1, OUTPUT); // Set BIN1 pin as output
+      digitalWrite(3, HIGH); // Set pin 3 to HIGH
     }
 
     void forward() {
@@ -35,8 +44,6 @@ class RobotCar {
       analogWrite(PWMB, 0);
     }
 };
-
-RobotCar car;
 
 void setup() {
   car.setup();
