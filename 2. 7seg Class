@@ -1,2 +1,63 @@
+/*
+The goal of this program is to display a count from 0 to 9 on each of the four digits of a 7-segment display using a 74HC595 shift register. */
 
+#define NUM_OF_DIGITS 4
 
+class SevenSegmentDisplay {
+  private:
+    int latchPin;
+    int csPin;
+    int dataPin;
+    int digitPins[NUM_OF_DIGITS];
+    unsigned char table[10] = {
+      0xc0, 0xf9, 0xa4, 0xb0, 0x99, 0x92, 0x82, 0xf8, 0x80, 0x90
+    };
+    
+  public:
+    SevenSegmentDisplay(int latch, int cs, int data, int dPins[NUM_OF_DIGITS]) {
+      latchPin = latch;
+      csPin = cs;
+      dataPin = data;
+      for (int i = 0; i < NUM_OF_DIGITS; i++) {
+        digitPins[i] = dPins[i];
+      }
+    }
+    
+    void setup() {
+      pinMode(latchPin, OUTPUT);
+      pinMode(csPin, OUTPUT);
+      pinMode(dataPin, OUTPUT);
+      for (int j = 0; j < NUM_OF_DIGITS; j++) {
+        pinMode(digitPins[j], OUTPUT);
+      }
+    }
+    
+    void displayDigit(int id, unsigned char num) {
+      digitalWrite(latchPin, LOW);
+      shiftOut(dataPin, csPin, MSBFIRST, table[num]);
+      digitalWrite(latchPin, HIGH);
+      for (int j = 0; j < NUM_OF_DIGITS; j++) {
+        digitalWrite(digitPins[j], LOW);
+      }
+      digitalWrite(digitPins[id], HIGH);
+    }
+};
+
+SevenSegmentDisplay display(4, 5, 3, {11, 10, 9, 8});
+
+void setup() {
+  Serial.begin(115200);
+  display.setup();
+}
+
+void loop() {
+  //Count from 0 to 9 on each digit
+  for (int i = 0; i < NUM_OF_DIGITS; i++) {
+    for (int j = 0; j < 10; j++) {
+      display.displayDigit(i, j);
+      delay(500);
+      Serial.println(j);
+    }
+    delay(500);
+  }
+}
