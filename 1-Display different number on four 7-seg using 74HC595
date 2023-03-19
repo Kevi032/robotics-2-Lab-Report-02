@@ -1,3 +1,76 @@
+/*
+The goal of this program is to display a 4-digit number using a 7-segment display.
+The main theme is digital output and controlling pins to display the desired number.
+*/
 
+int latch = 4; //pin to latch
+int cs = 5; //clockpin
+int data = 3; //pin to pass the information
+int dPins[4] = {12, 13, A1, A2}; //pins that control the digits, the go in that order, 4-3-2-1
 
-    
+const byte digits[10] = { //It indicates which pins have to be on and off to display each number
+B00111111, // 0
+B00000110, // 1
+B01011011, // 2
+B01001111, // 3
+B01100110, // 4
+B01101101, // 5
+B01111101, // 6
+B0000111, // 7
+B01111111, // 8
+B01101111, // 9
+};
+
+void setup() {
+//Serial.begin(115200);
+pinMode(latch, OUTPUT); //set the latch pin as output
+pinMode(cs, OUTPUT); //set the clock pin as output
+pinMode(data, OUTPUT); //set the data pin as output
+pinMode(11, OUTPUT); //set the pin for the first digit as output
+pinMode(10, OUTPUT); //set the pin for the second digit as output
+pinMode(9, OUTPUT); //set the pin for the third digit as output
+pinMode(8, OUTPUT); //set the pin for the fourth digit as output
+}
+
+void loop() {
+//Count from 0 to 9 on each digit
+
+//First digit
+digitalWrite(11, HIGH); //turn on the pin for the first digit
+digitalWrite(10, HIGH); //turn on the pin for the second digit
+digitalWrite(9, HIGH); //turn on the pin for the third digit
+digitalWrite(8, LOW); //turn off the pin for the fourth digit
+digitalWrite(latch, LOW); //prepare to latch data
+shiftOut(data, cs, MSBFIRST, digits[9]); //shift out data for the number 1
+digitalWrite(latch, HIGH); //latch data
+delay(5); //wait for 5ms
+
+//Second digit
+digitalWrite(11, HIGH); //turn on the pin for the first digit
+digitalWrite(10, HIGH); //turn on the pin for the second digit
+digitalWrite(9, LOW); //turn off the pin for the third digit
+digitalWrite(8, HIGH); //turn on the pin for the fourth digit
+digitalWrite(latch, LOW); //prepare to latch data
+shiftOut(data, cs, MSBFIRST, digits[1]); //shift out data for the number 0
+digitalWrite(latch, HIGH); //latch data
+delay(5); //wait for 5ms
+
+//Third digit
+digitalWrite(11, HIGH); //turn on the pin for the first digit
+digitalWrite(10, LOW); //turn off the pin for the second digit
+digitalWrite(9, HIGH); //turn on the pin for the third digit
+digitalWrite(8, HIGH); //turn on the pin for the fourth digit
+digitalWrite(latch, LOW); //prepare to latch data
+shiftOut(data, cs, MSBFIRST, digits[3]);
+
+//Four digit
+digitalWrite(11, LOW);//turn off the pin for the second digit
+  digitalWrite(10, HIGH);//turn on the pin for the fourth digit
+  digitalWrite(9, HIGH);//turn on the pin for the fourth digit
+  digitalWrite(8, HIGH);//turn on the pin for the fourth digit
+  digitalWrite(latch, LOW);//turn off the pin for the second digit
+ 	shiftOut(data, cs, MSBFIRST, digits[8]);
+ 	digitalWrite(latch, HIGH);//prepare to latch data
+  delay(5);
+ 	
+}
